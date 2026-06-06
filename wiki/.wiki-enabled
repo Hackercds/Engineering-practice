@@ -1,0 +1,7 @@
+# wiki/.wiki-enabled
+#
+# 本文件存在 = Wiki 启用。
+# 删除本文件 = Wiki 关闭（Claude/agent 不会主动加载 wiki 内容）。
+#
+# 启用后，Claude 也不会"默认读全部 wiki"——见根 AGENTS.md / CLAUDE.md
+# 的"按需加载"约定。Claude 用 python scripts/wiki/query.py <关键词> 检索。

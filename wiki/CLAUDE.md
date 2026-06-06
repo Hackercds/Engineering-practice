@@ -8,6 +8,19 @@
 > 很多 LLM Wiki 实践会演化成十几个 K 的"次级应用"（前端 / MCP server / 几十个 skills / 复杂子目录）。**这是反模式**——
 > wiki 的价值是"AI 看得懂、人能维护、git 可追溯"，**不是"工具多"**。
 > 本仓库坚持**单一文件配置 + 纯 Markdown + Python 脚本**的极简范式（参考 [nashsu/llm_wiki](https://github.com/nashsu/llm_wiki) 的核心理念）。
+>
+> ## 按需启用（重要 · 防止爆 context）
+>
+> **本目录是 opt-in 的**：
+> - 根目录 `wiki/.wiki-enabled` 文件**存在 = 启用**；**不存在 = 关闭**（agent 不会主动读）
+> - **不要默认全读** `wiki/*.md` —— 几十页会爆 context window
+> - 启用时，**按需检索**：`python scripts/wiki/wiki_ask.py "<query>"`
+>   - 该脚本只返回 top 3 相关页的 title + 第一段（不返回全文）
+>   - 看到相关页 → 再用 `Read` 工具拉单页
+> - 何时该查 wiki（启用后）：用户问"这个项目怎么…/架构/为什么/我们的约定"
+> - 何时**不**该查：单纯写代码、跑命令、改文件 —— 走正常 Read/Glob/Grep
+>
+> **设计哲学**：Wiki 是"按需检索的图书馆"，不是"必读手册"。
 
 ---
 

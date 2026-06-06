@@ -10,6 +10,14 @@
 > - 通用规则改 `AGENTS.md`；Claude 偏好改本文件。**不要重复**。
 > - 担心多一个文件？—— 改一处通用规则，Codex/Cursor/Aider 也跟着生效，这是可移植性的最小成本。
 >
+> ## Wiki 知识层（**按需启用 · 不要默认全读**）
+>
+> 本仓库可能有 `wiki/` 目录。规则：
+> - **存在 `wiki/.wiki-enabled` = 启用**；不存在 = 关闭（默认不读）
+> - **不要默认全读 wiki/** —— 会爆 context
+> - 查"项目怎么…/架构/为什么"时，**调 `python scripts/wiki/wiki_ask.py "<query>"`** 按关键词检索
+> - 完整 Schema 在 [`wiki/CLAUDE.md`](wiki/CLAUDE.md)——只在启用且需要"维护 wiki"时再读
+>
 > ## 速查
 >
 > | 我想知道…… | 看哪里 |
@@ -17,6 +25,7 @@
 > | 命名/安全/测试/审査/AgentOps | [AGENTS.md](AGENTS.md) |
 > | 工作流（9 步）/ 必读清单 / 跑偏自检 | 本文件 §2 / §5 / §7 |
 > | Claude 怎么用 / MCP / plan mode | §8（Claude 专属） |
+> | 项目知识 / 架构 / 决策依据 | `python scripts/wiki/wiki_ask.py "<query>"` |
 
 ---
 
