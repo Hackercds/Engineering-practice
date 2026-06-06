@@ -1,6 +1,8 @@
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+# 把 backend 根目录加进 sys.path，CI 在子目录跑也能 `from app import ...`
+pythonpath = ["."]
 
 [tool.coverage.run]
 source = ["app"]
