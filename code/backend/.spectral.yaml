@@ -1,0 +1,9 @@
+extends: ["spectral:oas"]
+rules:
+  operation-operationId: error       # 每个操作必须有 operationId
+  operation-description: warn        # 鼓励有描述
+  oas3-api-servers: warn             # 鼓励有 servers
+  tag-description: off               # 不强制 tag 描述
+  info-contact: off                  # 本仓库无对外联系
+  info-license: off                  # license 在仓库根 LICENSE
+  oas3-valid-media-example: off      # 示例可选

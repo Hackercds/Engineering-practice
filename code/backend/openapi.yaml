@@ -1,0 +1,101 @@
+openapi: 3.0.3
+info:
+  title: Todo API
+  version: 1.0.0
+  description: |
+    SPEC-001 契约（机器可读）。
+    任何破坏性变更必须升级 major 版本 + 更新 changelog。
+servers:
+  - url: http://127.0.0.1:8000
+    description: 本地开发
+
+paths:
+  /todos:
+    post:
+      operationId: createTodo
+      summary: 新建待办
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TodoCreate"
+      responses:
+        "201":
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+    get:
+      operationId: listTodos
+      summary: 列出全部待办（按 id 升序）
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Todo"
+
+  /todos/{id}/done:
+    post:
+      operationId: markDone
+      summary: 标记完成（幂等）
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer, minimum: 1 }
+      responses:
+        "200":
+          description: 成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Todo"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+components:
+  schemas:
+    TodoCreate:
+      type: object
+      required: [title]
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 100
+          example: 买菜
+    Todo:
+      type: object
+      required: [id, title, done]
+      properties:
+        id:    { type: integer, readOnly: true, example: 1 }
+        title: { type: string,  example: 买菜 }
+        done:  { type: boolean, default: false }
+
+  responses:
+    ValidationError:
+      description: 校验失败（空/仅空白/超长）
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detail:
+                type: array
+                items: { type: object }
+    NotFound:
+      description: id 不存在
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              detail: { type: string, example: todo not found }
