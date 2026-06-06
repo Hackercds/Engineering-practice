@@ -1,0 +1,18 @@
+flowchart LR
+  A[需求] --> B[Spec]
+  B --> C[计划]
+  C --> D[任务]
+  D --> E[测试 红]
+  E --> F[实现 绿]
+  F --> G[OpenAPI 契约]
+  G --> H[typed client]
+  H --> I[前端 UI]
+  G --> J[CI 12 门]
+  J --> K{过?}
+  K -->|是| L[合并]
+  K -->|否| E
+  L --> M[部署]
+  M --> N[AgentOps 监控]
+  N --> O{异常?}
+  O -->|是| P[回滚]
+  O -->|否| Q[继续]

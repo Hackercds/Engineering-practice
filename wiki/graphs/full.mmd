@@ -1,0 +1,25 @@
+graph LR
+  subgraph Concepts
+    SDD[Spec Driven Development]
+    HARNESS[Harness Engineering]
+    LLM[LLM Wiki Pattern]
+    TDD[TDD]
+  end
+  subgraph Entities
+    TODO[todo-api]
+    CC[claude-code]
+    FA[fastapi]
+    SPEC[spec-001-todo-api]
+  end
+
+  SDD --> TDD
+  SDD --> HARNESS
+  HARNESS --> LLM
+  TDD --> HARNESS
+
+  TODO --> FA
+  TODO --> SPEC
+  CC --> TODO
+  SPEC --> TODO
+  LLM -.文档化.-> TODO
+  HARNESS -.约束.-> CC

@@ -1,0 +1,20 @@
+graph LR
+  SDD[Spec Driven Development]
+  HARNESS[Harness Engineering]
+  LLM[LLM Wiki Pattern]
+  TDD[TDD]
+  AGENTS[AGENTS.md]
+  CLAUDE[CLAUDE.md]
+  RAW[raw/]
+  WIKI[wiki/]
+
+  SDD --> TDD
+  SDD --> HARNESS
+  HARNESS --> AGENTS
+  HARNESS --> CLAUDE
+  HARNESS --> LLM
+  TDD --> HARNESS
+  LLM --> WIKI
+  RAW --> LLM
+  CLAUDE --> WIKI
+  AGENTS --> HARNESS

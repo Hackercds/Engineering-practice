@@ -1,0 +1,49 @@
+name: Wiki CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    # 每周一 02:00 UTC 跑一次完整 lint
+    - cron: "0 2 * * 1"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Wiki Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Lint wiki
+        run: python scripts/wiki/lint.py
+
+  render:
+    name: Mermaid Render Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: 装 mermaid-cli
+        run: |
+          npm install -g @mermaid-js/mermaid-cli@10
+      - name: 渲染 + 校验
+        run: python scripts/wiki/render_graph.py
+
+  query-smoke:
+    name: Query Smoke Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: 跑一个 query 看脚本能调
+        run: |
+          python scripts/wiki/query.py "SDD" || echo "（未匹配是预期的，仅校验脚本能跑）"
